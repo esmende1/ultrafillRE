@@ -8,13 +8,19 @@ void adc_init(void) {
 
 }
 
-void adc_setup_channel(uint8_t port, uint8_t pin_num) {
+void adc_setup_channel(uint8_t port_num, uint8_t pin_num, uint8_t chan_num) {
 
-    if (port != 6) {
+    if (port_num != 6) {
         return; // Invalid port for ADC input
     }
     // Configure ADC12MCTL0 for the specified channel
-    ADC12MCTL0 = (pinnum & 0x0F);
+    if (chan_num >= 16) 
+    {
+        return; // Invalid channel number
+    }
+    volatile uint8_t *adc_mctl_reg = (volatile uint8_t *)&ADC12MCTL0 + chan_num; // Get the address of the appropriate ADC12MCTLx register
+
+    *adc_mctl_reg = (pin_num & 0x0F);
 }
 
 void adc_start(void) {

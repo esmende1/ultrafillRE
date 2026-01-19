@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include "io.h"
 #include "io_ultrafill.h"
+#include "adc.h"
 
 
 void init(void) {
@@ -16,7 +17,7 @@ void delay_nop(uint32_t count) {
 
 void adc_init_ultrafill(void) {
 
-    adc_setup_channel(PRESSURE_IN_LP);
+    adc_setup_channel(PRESSURE_IN_LP, 0);
 }
 
 int main(void) {
