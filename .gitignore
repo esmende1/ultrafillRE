@@ -1,0 +1,15 @@
+# Ignore build artifacts
+build/
+*.elf
+*.hex
+*.bin
+*.o
+*.a
+*.so
+*.d
+
+
+# Debug files
+*.lst
+*.map
+*.sym

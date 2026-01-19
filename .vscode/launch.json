@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "MSP430 Remote Debug (192.168.0.83:3333)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/firmware-debug.elf",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "msp430-elf-gdb",
+            "miDebuggerServerAddress": "192.168.0.83:3333",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for GDB",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set architecture to MSP430",
+                    "text": "set architecture msp430",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Connect to remote GDB server",
+                    "text": "target remote 192.168.0.83:3333",
+                    "ignoreFailures": false
+                }
+            ],
+            "postRemoteConnectCommands": [
+                {
+                    "description": "Load program",
+                    "text": "load",
+                    "ignoreFailures": false
+                }
+            ],
+            "logging": {
+                "trace": false,
+                "traceResponse": false,
+                "engineLogging": false
+            },
+            "preLaunchTask": "Build Debug (make DEBUG=1)"
+        }
+    ],
+    "compounds": []
+}
