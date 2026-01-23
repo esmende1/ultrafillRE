@@ -83,6 +83,30 @@
                 "focus": true,
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Start MSPDebug GDB Server",
+            "type": "shell",
+            "command": "${workspaceFolder}/start-debug.sh",
+            "isBackground": true,
+            "dependsOn": "Build Debug (make DEBUG=1)",
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^.*$",
+                    "line": 0,
+                    "column": 0,
+                    "message": 0
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*Starting MSPDebug GDB server.*",
+                    "endsPattern": "^.*Bound to port 2000.*"
+                }
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
         }
     ]
 }

@@ -1,12 +1,6 @@
-# GDB initialization script for remote MSP430F155 debugging
-# Usage: gdb -x .gdbinit
-
-# Set target to remote debugger
-# MSPDebug typically runs GDB server on localhost:2000
-target remote localhost:2000
-
-# Load the firmware ELF file
-file build/firmware-debug.elf
+# GDB initialization script for MSP430F155 debugging with MSP-FET430UIF
+# NOTE: VS Code launch.json now handles target and file loading
+# This script is kept for manual debugging with: gdb -x .gdbinit
 
 # Set architecture (MSP430)
 set architecture msp430

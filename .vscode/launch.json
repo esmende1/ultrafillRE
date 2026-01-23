@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "MSP430 Remote Debug (192.168.0.83:3333)",
+            "name": "MSP430 Debug with MSP-FET430UIF",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/firmware-debug.elf",
@@ -13,7 +13,8 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "msp430-elf-gdb",
-            "miDebuggerServerAddress": "192.168.0.83:3333",
+            "miDebuggerServerAddress": "localhost:2000",
+            "svdPath": "${workspaceFolder}/resources/MSP430F155.svd",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for GDB",
@@ -24,26 +25,31 @@
                     "description": "Set architecture to MSP430",
                     "text": "set architecture msp430",
                     "ignoreFailures": true
-                },
-                {
-                    "description": "Connect to remote GDB server",
-                    "text": "target remote 192.168.0.83:3333",
-                    "ignoreFailures": false
                 }
             ],
             "postRemoteConnectCommands": [
                 {
-                    "description": "Load program",
+                    "description": "Erase device memory",
+                    "text": "mon erase all",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Load program into device",
                     "text": "load",
                     "ignoreFailures": false
+                },
+                {
+                    "description": "Reset device",
+                    "text": "mon reset",
+                    "ignoreFailures": true
                 }
             ],
             "logging": {
-                "trace": false,
-                "traceResponse": false,
-                "engineLogging": false
+                "trace": true,
+                "traceResponse": true,
+                "engineLogging": true
             },
-            "preLaunchTask": "Build Debug (make DEBUG=1)"
+            "preLaunchTask": "Start MSPDebug GDB Server",
         }
     ],
     "compounds": []

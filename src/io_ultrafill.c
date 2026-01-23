@@ -11,6 +11,8 @@ void io_init_ultrafill(void) {
     io_init(LED_D8_BLUE4, IO_OUTPUT, IO_GPIO); 
     io_init(PRESSURE_IN_LP, IO_INPUT, IO_PERIPHERAL);
     io_init(PRESSURE_IN_HP, IO_INPUT, IO_PERIPHERAL); 
+    io_init(6, 2, IO_INPUT, IO_PERIPHERAL);
+    io_init(6, 3, IO_INPUT, IO_PERIPHERAL); 
 
     io_set(LED_D19_GREEN1, 0); // Turn off LED_D19_GREEN1
     io_set(LED_D10_AMBER1, 0); // Turn off LED_D10_AMBER1
