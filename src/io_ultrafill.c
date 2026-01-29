@@ -11,6 +11,7 @@ void io_init_ultrafill(void) {
     io_init(LED_D8_BLUE4, IO_OUTPUT, IO_GPIO); 
     io_init(PRESSURE_IN_LP, IO_INPUT, IO_PERIPHERAL);
     io_init(PRESSURE_IN_HP, IO_INPUT, IO_PERIPHERAL); 
+    io_init(COMPRESSOR_ENABLE, IO_OUTPUT, IO_GPIO);
     io_init(6, 2, IO_INPUT, IO_PERIPHERAL);
     io_init(6, 3, IO_INPUT, IO_PERIPHERAL); 
 
@@ -21,6 +22,7 @@ void io_init_ultrafill(void) {
     io_set(LED_D8_BLUE2, 0); // Turn off LED_D8_BLUE2
     io_set(LED_D8_BLUE3, 0); // Turn off LED_D8_BLUE3
     io_set(LED_D8_BLUE4, 0); // Turn off LED_D8_BLUE4
+    io_set(COMPRESSOR_ENABLE, 0); // Turn off COMPRESSOR_ENABLE
 
 }
 
@@ -58,6 +60,10 @@ void blue_led_set_level(uint8_t level) {
             io_set(LED_D8_BLUE4, 1);
             break;
         default:
+            io_set(LED_D8_BLUE1, 0);
+            io_set(LED_D8_BLUE2, 0);
+            io_set(LED_D8_BLUE3, 0);
+            io_set(LED_D8_BLUE4, 0);
             break;
     }
 }

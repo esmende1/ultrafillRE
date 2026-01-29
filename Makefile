@@ -26,6 +26,7 @@ PROJECT_NAME = firmware
 ELF_FILE = $(BUILD_DIR)/$(PROJECT_NAME)$(DEBUG_SUFFIX).elf
 HEX_FILE = $(BUILD_DIR)/$(PROJECT_NAME)$(DEBUG_SUFFIX).hex
 LST_FILE = $(BUILD_DIR)/$(PROJECT_NAME)$(DEBUG_SUFFIX).lst
+DIS_FILE = $(BUILD_DIR)/$(PROJECT_NAME)$(DEBUG_SUFFIX).dis
 
 # ===== Compiler Flags =====
 # Debug flags for GDB remote debugging
@@ -62,9 +63,9 @@ LDFLAGS = -mmcu=$(MCU) \
           -Wl,--print-memory-usage
 
 # ===== Build Rules =====
-.PHONY: all clean build hex size help debug debug-build
+.PHONY: all clean build hex dis size help debug debug-build
 
-all: build hex size
+all: build hex dis size
 
 build: $(ELF_FILE)
 
@@ -77,6 +78,8 @@ debug-build: DEBUG=1
 debug-build: build
 
 hex: $(HEX_FILE)
+
+dis: $(DIS_FILE)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -95,6 +98,11 @@ $(HEX_FILE): $(ELF_FILE)
 	@$(OBJCOPY) -O ihex $< $@
 	@echo "HEX file generated: $@"
 
+$(DIS_FILE): $(ELF_FILE)
+	@echo "Creating disassembly listing: $@"
+	@msp430-elf-objdump -d -S -t $< > $@
+	@echo "Disassembly generated: $@"
+
 $(LST_FILE): $(ELF_FILE)
 	@echo "Creating listing file: $@"
 	@$(OBJCOPY) -O verilog $< $@
@@ -110,9 +118,10 @@ clean:
 
 help:
 	@echo "MSP430F155 Makefile targets:"
-	@echo "  make all         - Build project and generate HEX file (default)"
+	@echo "  make all         - Build project and generate HEX and disassembly (default)"
 	@echo "  make build       - Build ELF file only"
 	@echo "  make hex         - Generate HEX file from ELF"
+	@echo "  make dis         - Generate disassembly listing from ELF"
 	@echo "  make size        - Show memory usage"
 	@echo "  make debug       - Build with full debug symbols (clean build)"
 	@echo "  make debug-build - Build with debug symbols only"
