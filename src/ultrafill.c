@@ -32,6 +32,9 @@ ultrafill_fault_t ultrafill_check_system(void)
     if (hp_pressure > ULTRAFILL_HP_OVERPRESSURE_ADC_COUNTS) {
         fault |= ULTRAFILL_FAULT_HP_OVERPRESSURE;
     }
+    if (hp_pressure < ULTRAFILL_HP_SENSORFAULT_ADC_COUNTS) {
+        fault |= ULTRAFILL_FAULT_HP_SENSOR;
+    }
     //TODO FAN fault detection
     return fault;
 }
@@ -60,7 +63,7 @@ void ultrafill_state_machine(void)
     if (fault != ULTRAFILL_FAULT_NONE) {
         ultrafill_stop_filling();
         ultrafill_state = ULTRAFILL_STATE_FAULT;
-        ultrafill_fault_count++;
+        ultrafill_fault_count = 0;
     }
     switch(ultrafill_state)
     {
@@ -81,14 +84,14 @@ void ultrafill_state_machine(void)
             }
             break;
         case ULTRAFILL_STATE_FAULT:
-            if (fault == ULTRAFILL_FAULT_NONE && ultrafill_fault_count >= ULTRAFILL_FAULT_RETRY_COUNTS) {
+            if (fault == ULTRAFILL_FAULT_NONE && ++ultrafill_fault_count >= ULTRAFILL_FAULT_RETRY_COUNTS) {
                 //Try filling again
                 ultrafill_state = ULTRAFILL_STATE_IDLE;
             }
             break;
         default:
             // Unknown state, reset to idle
-            ultrafill_state = ULTRAFILL_STATE_IDLE;
+            ultrafill_state = ULTRAFILL_STATE_IDLE;         
             break;
     }
     ultrafill_update_leds();
