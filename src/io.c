@@ -52,6 +52,36 @@ void io_init(uint8_t port, uint8_t pin_num, io_direction_t direction, io_selecti
     }
 }
 
+//Returns 0 or 1 depending on pin state
+uint8_t io_read(uint8_t port, uint8_t pin_num)
+{
+    volatile uint8_t *reg;
+    switch (port)
+    {
+    case 1:
+        reg = &P1IN;
+        break;
+    case 2:
+        reg = &P2IN;
+        break;
+    case 3:
+        reg = &P3IN;
+        break;
+    case 4:
+        reg = &P4IN;
+        break;
+    case 5:
+        reg = &P5IN;
+        break;
+    case 6:
+        reg = &P6IN;
+        break;
+    default:
+        return 0; // Invalid port
+    }
+    return ((*reg >> pin_num) & 0x01); // Return the pin state
+}
+
 void io_set(uint8_t port, uint8_t pin_num, uint8_t state)
 {
     volatile uint8_t *reg;

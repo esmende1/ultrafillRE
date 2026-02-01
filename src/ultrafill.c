@@ -6,6 +6,7 @@
 ultrafill_state_t ultrafill_state;
 uint16_t ultrafill_fault_count;
 
+
 uint16_t ultrafill_read_lp_pressure(void)
 {
     return adc_read(PRESSURE_LP_ADC_CHANNEL);
@@ -56,7 +57,7 @@ void ultrafill_init(void)
 
 }
 
-void ultrafill_state_machine(void)
+void ultrafill_process(void)
 {
     ultrafill_fault_t fault = ultrafill_check_system();
 
@@ -103,34 +104,39 @@ void ultrafill_update_leds(void)
     switch (ultrafill_state)
     {
         case ULTRAFILL_STATE_IDLE:
-            io_set(LED_D19_GREEN1, 0);
-            io_set(LED_D10_AMBER1, 0);
-            io_set(LED_D3_RED1, 0);
+            io_set(LED_GREEN, 0);
+            io_set(LED_AMBER, 0);
+            io_set(LED_RED, 0);
             break;
         case ULTRAFILL_STATE_FILLING:
-            io_set(LED_D19_GREEN1, 1);
-            io_set(LED_D10_AMBER1, 0);
-            io_set(LED_D3_RED1, 0);
+            io_set(LED_GREEN, 1);
+            io_set(LED_AMBER, 0);
+            io_set(LED_RED, 0);
             break;
         case ULTRAFILL_STATE_FULL:
-            io_set(LED_D19_GREEN1, 1);
-            io_set(LED_D10_AMBER1, 1);
-            io_set(LED_D3_RED1, 0);
+            io_set(LED_GREEN, 1);
+            io_set(LED_AMBER, 1);
+            io_set(LED_RED, 0);
             break;
         case ULTRAFILL_STATE_FAULT:
-            io_set(LED_D19_GREEN1, 0);
-            io_set(LED_D10_AMBER1, 0);
-            io_set(LED_D3_RED1, 1);
+            io_set(LED_GREEN, 0);
+            io_set(LED_AMBER, 0);
+            io_set(LED_RED, 1);
             break;
         default:
             // Unknown state, turn off all LEDs
-            io_set(LED_D19_GREEN1, 0);
-            io_set(LED_D10_AMBER1, 0);
-            io_set(LED_D3_RED1, 0);
+            io_set(LED_GREEN, 0);
+            io_set(LED_AMBER, 0);
+            io_set(LED_RED, 0);
             break;
     }
 
     uint16_t hp_count = ultrafill_read_hp_pressure();
 
     blue_led_set_level((hp_count >> 9));
+}
+
+uint8_t ultrafill_get_button(void)
+{
+    return io_read(BUTTON_INPUT);
 }

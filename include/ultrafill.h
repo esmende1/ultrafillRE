@@ -26,7 +26,7 @@ typedef enum {
 #define ULTRAFILL_HP_FULL_ADC_COUNTS 3100
 #define ULTRAFILL_HP_FULL_ADC_COUNTS 3100
 #define ULTRAFILL_HP_OVERPRESSURE_ADC_COUNTS 3300
-#define ULTRAFILL_HP_SENSORFAULT_ADC_COUNTS 100
+#define ULTRAFILL_HP_SENSORFAULT_ADC_COUNTS 700
 #define ULTRAFILL_LP_UNDERPRESSURE_ADC_COUNTS 100
 #define ULTRAFILL_LP_OVERPRESSURE_ADC_COUNTS 2000
 
@@ -35,7 +35,7 @@ uint16_t ultrafill_read_lp_pressure(void);
 uint16_t ultrafill_read_hp_pressure(void);
 ultrafill_fault_t ultrafill_check_system(void);
 void ultrafill_init(void);
-void ultrafill_state_machine(void);
+void ultrafill_process(void);
 void ultrafill_start_filling(void);
 void ultrafill_stop_filling(void);
 void ultrafill_update_leds(void);   

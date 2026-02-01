@@ -15,10 +15,19 @@ void init(void)
 	__bis_SR_register(GIE);
 }
 
+volatile uint8_t io_regs[6];
+
 void adc_init_ultrafill(void)
 {
-    adc_setup_channel(PRESSURE_IN_LP, 0, 0);
-    adc_setup_channel(PRESSURE_IN_HP, 1, 1); // Last channel needs is_last = 1
+
+    adc_setup_channel(6, 0, 0, 0);
+    adc_setup_channel(PRESSURE_IN_LP, 1, 0); // Last channel needs is_last = 1
+    adc_setup_channel(6, 1, 2, 0);
+    adc_setup_channel(PRESSURE_IN_HP, 3, 0);
+    adc_setup_channel(6, 4, 4, 0);
+    adc_setup_channel(6, 5, 5, 0);
+    adc_setup_channel(6, 6, 6, 0);
+    adc_setup_channel(6, 7, 7, 1);
 }
 volatile uint16_t adc1_results[8] = {0};
 
@@ -33,11 +42,22 @@ int main(void)
     timer_init();
     ultrafill_init();
 
+
     while (1)
     {
         if (timer_system_tick())
         {
-            ultrafill_state_machine();
+            io_regs[0] = P1IN;
+            io_regs[1] = P2IN;
+            io_regs[2] = P3IN;
+            io_regs[3] = P4IN;
+            io_regs[4] = P5IN;
+            io_regs[5] = P6IN;
+            for (uint8_t i = 0; i < 8; i++) {
+                adc1_results[i] = adc_read(i);
+            }
+
+            ultrafill_process();
         }
     }
 
