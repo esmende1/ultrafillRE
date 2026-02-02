@@ -76,6 +76,12 @@ void ultrafill_process(void)
     case ULTRAFILL_STATE_IDLE:
         if (ultrafill_current_fault == ULTRAFILL_FAULT_NONE)
         {
+            if (ultrafill_read_hp_pressure() >= ULTRAFILL_HP_FULL_ADC_COUNTS)
+            {
+                // Already full
+                ultrafill_state = ULTRAFILL_STATE_FULL;
+                break;
+            }
             // Start filling
             ultrafill_start_filling();
             ultrafill_state = ULTRAFILL_STATE_FILLING;
