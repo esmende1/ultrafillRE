@@ -23,3 +23,4 @@
 void io_init_ultrafill(void);
 
 void blue_led_set_level(uint8_t level);
+void adc_init_ultrafill(void);

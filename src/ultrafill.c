@@ -3,6 +3,8 @@
 #include "io.h"
 #include "io_ultrafill.h"
 
+
+
 ultrafill_state_t ultrafill_state;
 uint16_t ultrafill_fault_count;
 volatile ultrafill_fault_t ultrafill_current_fault;
@@ -71,6 +73,7 @@ void ultrafill_process(void)
         ultrafill_state = ULTRAFILL_STATE_FAULT;
         ultrafill_fault_count = 0;
     }
+
     switch (ultrafill_state)
     {
     case ULTRAFILL_STATE_IDLE:

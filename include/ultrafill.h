@@ -18,6 +18,11 @@ typedef enum {
     ULTRAFILL_FAULT_FAN_FAILURE = 16
 } ultrafill_fault_t;
 
+typedef enum {
+    ULTRAFILL_BUTTON_STATE_TOGGLE_OFF = 0,
+    ULTRAFILL_BUTTON_STATE_TOGGLE_ON = 1
+} ultrafill_button_state_t;
+
 #define ULTRAFILL_MAX_FILL_PRESSURE_PSI 3100
 
 
