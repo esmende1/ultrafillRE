@@ -14,13 +14,11 @@
 
 #define BUTTON_INPUT 5, 6
 
+#define PRESSURE_IN_LP 6, 0
 #define PRESSURE_IN_HP 6, 3
 
-//Not sure about this one
-#define PRESSURE_IN_LP 6, 1
-
-#define PRESSURE_HP_ADC_CHANNEL 0
-#define PRESSURE_LP_ADC_CHANNEL 1
+#define PRESSURE_LP_ADC_CHANNEL 0
+#define PRESSURE_HP_ADC_CHANNEL 3
 
 void io_init_ultrafill(void);
 

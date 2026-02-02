@@ -11,8 +11,7 @@ void init(void)
 {
     WDTCTL = WDTPW + WDTHOLD; // Stop watchdog timer
     clock_init();
-    //Global interrupt enable
-	__bis_SR_register(GIE);
+	__bis_SR_register(GIE); //Global interrupt enable
 }
 
 volatile uint8_t io_regs[6];
@@ -20,10 +19,10 @@ volatile uint8_t io_regs[6];
 void adc_init_ultrafill(void)
 {
 
-    adc_setup_channel(6, 0, 0, 0);
-    adc_setup_channel(PRESSURE_IN_LP, 1, 0); // Last channel needs is_last = 1
+    adc_setup_channel(PRESSURE_IN_LP, PRESSURE_LP_ADC_CHANNEL, 0); // Last channel needs is_last = 1
+    adc_setup_channel(6, 1, 1, 0);
     adc_setup_channel(6, 1, 2, 0);
-    adc_setup_channel(PRESSURE_IN_HP, 3, 0);
+    adc_setup_channel(PRESSURE_IN_HP, PRESSURE_HP_ADC_CHANNEL, 0);
     adc_setup_channel(6, 4, 4, 0);
     adc_setup_channel(6, 5, 5, 0);
     adc_setup_channel(6, 6, 6, 0);

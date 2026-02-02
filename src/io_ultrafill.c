@@ -1,7 +1,9 @@
 #include "io_ultrafill.h"
 #include "io.h"
 void io_init_ultrafill(void) {
-    
+
+    //outputs
+    io_init(COMPRESSOR_ENABLE, IO_OUTPUT, IO_GPIO);
     io_init(LED_GREEN, IO_OUTPUT, IO_GPIO); 
     io_init(LED_AMBER, IO_OUTPUT, IO_GPIO); 
     io_init(LED_RED, IO_OUTPUT, IO_GPIO); 
@@ -9,12 +11,12 @@ void io_init_ultrafill(void) {
     io_init(LED_BLUE2, IO_OUTPUT, IO_GPIO);
     io_init(LED_BLUE3, IO_OUTPUT, IO_GPIO); 
     io_init(LED_BLUE4, IO_OUTPUT, IO_GPIO); 
+    //Analog inputs 
+    //All Are enabled for testing
     io_init(PRESSURE_IN_LP, IO_INPUT, IO_PERIPHERAL);
-        io_set(LED_GREEN, 1);
-    io_init(PRESSURE_IN_HP, IO_INPUT, IO_PERIPHERAL); 
-    io_init(COMPRESSOR_ENABLE, IO_OUTPUT, IO_GPIO);
-    io_init(6, 0, IO_INPUT, IO_PERIPHERAL);
+    io_init(6, 1, IO_INPUT, IO_PERIPHERAL);
     io_init(6, 2, IO_INPUT, IO_PERIPHERAL); 
+    io_init(PRESSURE_IN_HP, IO_INPUT, IO_PERIPHERAL); 
     io_init(6, 4, IO_INPUT, IO_PERIPHERAL); 
     io_init(6, 5, IO_INPUT, IO_PERIPHERAL);
     io_init(6, 6, IO_INPUT, IO_PERIPHERAL); 
